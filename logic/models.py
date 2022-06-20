@@ -24,3 +24,35 @@ class Profile(models.Model):
 
     def __str__(self) -> str:
         return self.user.username
+
+class Businesses(models.Model):
+    name = models.CharField(max_length=60, blank=False)
+    user = models.ForeignKey(
+        User, related_name="business", on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(
+        Neighbourhood, related_name="neighbour", on_delete=models.CASCADE)
+    email = models.EmailField(max_length=254, blank=True)
+    business_image = CloudinaryField("business_image")
+    description = models.TextField()
+
+    def __str__(self) -> str:
+        return self.name
+
+    @classmethod
+    def save_business(cls, business):
+        cls.save(business)
+
+    @classmethod
+    def delete_business(cls, business_id):
+        cls.delete(id=business_id)
+
+    @classmethod
+    def find_businesses(cls, business_name):
+        business = cls.objects.filter(name=business_name)
+        return business
+
+    @classmethod
+    def update_business(cls, name, user, neighbourhood, description, email, business_image):
+        cls.update(name=name, user=user,
+                   neighbourhood=neighbourhood, email=email, business_image=business_image, description=description)
+
