@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth import authenticate
 
+
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(
         required=True, widget=forms.EmailInput(attrs={'class': 'input-val bg-transparent form-control form-control-lg mt-3'}))
@@ -27,6 +28,7 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
 
 class LoginForm(forms.ModelForm):
     username = forms.CharField(
@@ -57,6 +59,7 @@ class LoginForm(forms.ModelForm):
         password = self.cleaned_data.get('password')
         user = authenticate(username=username, password=password)
         return user
+
 
 class PostsForm(forms.ModelForm):
     class Meta:

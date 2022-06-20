@@ -2,6 +2,8 @@ from django.db import models
 from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 # Create your models here.
+
+
 class Neighbourhood(models.Model):
     name = models.CharField(max_length=50, null=False, unique=True)
     location = models.CharField(max_length=50, null=False)
@@ -15,6 +17,24 @@ class Neighbourhood(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    @classmethod
+    def save_neighbourhood(cls, neighbourhood):
+        cls.save(neighbourhood)
+
+    @classmethod
+    def delete_neighbourhood(cls, neighbourhood_id):
+        cls.delete(id=neighbourhood_id)
+
+    @classmethod
+    def find_neigborhood(cls, neighbourhood_id):
+        neighbourhood = cls.objects.filter(id=neighbourhood_id)
+        return neighbourhood
+
+    @classmethod
+    def update_neighborhood(cls, name, admin, location, police, health, handyman):
+        cls.update(name=name, admin=admin,
+                   location=location, police=police, health=health, handyman=handyman)
+
 
 class Profile(models.Model):
     user = models.OneToOneField(
@@ -24,6 +44,7 @@ class Profile(models.Model):
 
     def __str__(self) -> str:
         return self.user.username
+
 
 class Businesses(models.Model):
     name = models.CharField(max_length=60, blank=False)
@@ -68,5 +89,3 @@ class Posts(models.Model):
 
     def __str__(self) -> str:
         return self.title
-    
-    
