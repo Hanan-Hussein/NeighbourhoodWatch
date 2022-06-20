@@ -15,3 +15,12 @@ class Neighbourhood(models.Model):
     def __str__(self) -> str:
         return self.name
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(
+        User, related_name="users", on_delete=models.CASCADE)
+    neighbourhood = models.ForeignKey(
+        Neighbourhood, related_name="occupants", on_delete=models.CASCADE, null=True)
+
+    def __str__(self) -> str:
+        return self.user.username
