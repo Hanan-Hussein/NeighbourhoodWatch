@@ -105,3 +105,22 @@ def Business_request(request):
     }
     return render(request, 'businesses.html', context=context)
 
+
+def post_request(request):
+    form = PostsForm
+    if request.method == 'POST':
+        form = PostsForm(request.POST, request.FILES)
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            content = form.cleaned_data['content']
+            image = form.cleaned_data['image']
+            neighbour=Profile.objects.get(user=request.user)
+            neighbourhood=neighbour.neighbourhood
+            form = Posts.objects.create(title=title, content=content,neighbourhood=neighbourhood,
+                             writer=Profile.objects.get(user=request.user),image=image)
+            form.save()
+            return redirect('home')
+    context = {
+        'form': form
+    }
+    return render(request, 'post.html', context=context)
