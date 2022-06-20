@@ -47,3 +47,29 @@ def register(request):
     }
     return render(request, 'auth/register.html', context=context)
 
+
+def logout_request(request):
+    logout(request)
+    return redirect('login')
+
+def account(request):
+    current_user = Profile.objects.filter(user=request.user)
+    user = Profile.objects.filter(user=request.user).first()
+    neigbourhood = Neighbourhood.objects.all()
+    posts = Posts.objects.filter(writer=Profile.objects.get(user=request.user))
+    if request.method == 'POST':
+        data = request.POST.get('q')
+        if data:
+            current_user.update(
+                neighbourhood=Neighbourhood.objects.get(id=data))
+            return redirect('account')
+        # print(request.POST.data)
+
+    context = {
+        "profile": current_user.first(),
+        "neigbourhoods": neigbourhood,
+        "posts": posts,
+        "user": user
+    }
+    return render(request, 'account.html', context=context)
+
