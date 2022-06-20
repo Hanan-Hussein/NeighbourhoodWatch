@@ -10,7 +10,7 @@ class Neighbourhood(models.Model):
     police = models.IntegerField(null=True)
     health = models.IntegerField(null=True)
     handyman = models.IntegerField(null=True)
-    # occupants = models.IntegerField(default=0)
+    occupants = models.IntegerField(default=0)
     admin = models.ForeignKey(
         User, null=False, related_name='neighbourhoods', on_delete=models.CASCADE)
 
