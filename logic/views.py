@@ -124,3 +124,18 @@ def post_request(request):
         'form': form
     }
     return render(request, 'post.html', context=context)
+    
+def business_search(request):
+    neighbour=Profile.objects.get(user=request.user)
+    business = Businesses.objects.all().filter(neighbourhood=neighbour.neighbourhood)
+    if 'bsname' in request.GET and request.GET['bsname']:
+        searched_term = request.GET['bsname']
+        user_display = request.user
+
+        searched = Businesses.find_businesses(searched_term)
+        message = f"{searched_term}"
+     
+        return render(request, 'search_results.html', {"message": message, 'searched': searched, 'user_display':user_display})
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search_results.html', {"message": message})
