@@ -73,3 +73,15 @@ def account(request):
     }
     return render(request, 'account.html', context=context)
 
+
+def Business_request(request):
+    neighbour=Profile.objects.get(user=request.user)
+    business = Businesses.objects.all().filter(neighbourhood=neighbour.neighbourhood)[0:3]
+    user = Profile.objects.filter(user=request.user).first()
+    
+    context = {
+        "business": business,
+        "user": user,
+        "title":user.neighbourhood
+    }
+    return render(request, 'businesses.html', context=context)
