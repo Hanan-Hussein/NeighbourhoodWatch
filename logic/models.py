@@ -56,3 +56,17 @@ class Businesses(models.Model):
         cls.update(name=name, user=user,
                    neighbourhood=neighbourhood, email=email, business_image=business_image, description=description)
 
+
+class Posts(models.Model):
+    title = models.CharField(max_length=50)
+    writer = models.ForeignKey(
+        Profile, related_name="posts", on_delete=models.CASCADE)
+    content = models.TextField()
+    image = CloudinaryField("image")
+    neighbourhood = models.ForeignKey(
+        Neighbourhood, related_name="neighbour_post", on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.title
+    
+    
