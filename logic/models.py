@@ -45,6 +45,18 @@ class Profile(models.Model):
     def __str__(self) -> str:
         return self.user.username
 
+    @classmethod
+    def save_profile(cls, profile):
+        cls.save(profile)
+
+    @classmethod
+    def update_profile(cls, user, neighbourhood):
+        cls.update(user=user, neighbourhood=neighbourhood)
+
+    @classmethod
+    def delete_profile(cls, profile):
+        cls.delete(profile)
+
 
 class Businesses(models.Model):
     name = models.CharField(max_length=60, blank=False)
@@ -89,3 +101,11 @@ class Posts(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    @classmethod
+    def save_posts(cls, posts):
+        cls.save(posts)
+
+    @classmethod
+    def delete_posts(cls, post_id):
+        cls.delete(id=post_id)
