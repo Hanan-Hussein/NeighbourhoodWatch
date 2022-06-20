@@ -27,3 +27,23 @@ def login_request(request):
     }
     return render(request, 'auth/login.html', context=context)
 
+def register(request):
+    form = RegisterForm()
+    if request.method == 'POST':
+        print(form.error_messages)
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")
+        else:
+            context = {
+                'form': form,
+                'valid': 'was-validated'
+            }
+        return render(request, 'auth/register.html', context=context)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'auth/register.html', context=context)
+
