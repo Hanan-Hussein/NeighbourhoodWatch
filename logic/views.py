@@ -5,7 +5,24 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Businesses, Neighbourhood, Profile, Posts
 
-# Create your views here.
+
+@login_required
+def home(request):
+    current_user = request.user
+    neighbour=Profile.objects.get(user=current_user)
+    business = Businesses.objects.all().filter(neighbourhood=neighbour.neighbourhood)[0:3]
+    posts  = Posts.objects.all().filter(neighbourhood=neighbour.neighbourhood)
+    user = Profile.objects.filter(user=request.user).first()
+    neighbourhood = Neighbourhood.objects.filter(occupants=Profile.objects.get(user=request.user)).first()
+    context = {
+        "business": business,
+        "posts": posts,
+        "user": user,
+        "neighbourhood": neighbourhood
+    }
+
+    return render(request, 'index.html', context=context)
+
 
 def login_request(request):
     form = LoginForm(request.POST)
@@ -26,6 +43,7 @@ def login_request(request):
         'form': form,
     }
     return render(request, 'auth/login.html', context=context)
+
 
 def register(request):
     form = RegisterForm()
@@ -51,6 +69,7 @@ def register(request):
 def logout_request(request):
     logout(request)
     return redirect('login')
+
 
 def account(request):
     current_user = Profile.objects.filter(user=request.user)
@@ -85,3 +104,4 @@ def Business_request(request):
         "title":user.neighbourhood
     }
     return render(request, 'businesses.html', context=context)
+
