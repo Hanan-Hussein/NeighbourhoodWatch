@@ -2,8 +2,7 @@
 ### By Hanan Hussein
 ### [Live Site](https://watchneighbourhood.herokuapp.com/) 
 
-![Screenshot from 2022-06-21 09-22-31](https://user-images.githubusercontent.com/36597096/174730612-1555faeb-f986-4e35-a505-4b6196fd7089.png)
-
+<img width="1440" alt="Screenshot 2022-06-21 at 09 53 57" src="https://user-images.githubusercontent.com/36597096/174746656-858d6c5c-3fca-4e03-9062-684913a6dad7.png">
 
 
 ## Description 
