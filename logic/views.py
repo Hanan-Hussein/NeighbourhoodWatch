@@ -137,6 +137,8 @@ def business_search(request):
         user_display = request.user
 
         searched = Businesses.find_businesses(searched_term)
+        searched = Businesses.find_businesses(searched_term).filter(
+        neighbourhood=neighbour.neighbourhood)
         message = f"{searched_term}"
 
         return render(request, 'search_results.html', {"message": message, 'searched': searched, 'user_display': user_display})
