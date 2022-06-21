@@ -9,11 +9,13 @@ from .models import Businesses, Neighbourhood, Profile, Posts
 @login_required
 def home(request):
     current_user = request.user
-    neighbour=Profile.objects.get(user=current_user)
-    business = Businesses.objects.all().filter(neighbourhood=neighbour.neighbourhood)[0:3]
-    posts  = Posts.objects.all().filter(neighbourhood=neighbour.neighbourhood)
+    neighbour = Profile.objects.get(user=current_user)
+    business = Businesses.objects.all().filter(
+        neighbourhood=neighbour.neighbourhood)[0:3]
+    posts = Posts.objects.all().filter(neighbourhood=neighbour.neighbourhood)
     user = Profile.objects.filter(user=request.user).first()
-    neighbourhood = Neighbourhood.objects.filter(occupants=Profile.objects.get(user=request.user)).first()
+    neighbourhood = Neighbourhood.objects.filter(
+        occupants=Profile.objects.get(user=request.user)).first()
     context = {
         "business": business,
         "posts": posts,
@@ -94,14 +96,15 @@ def account(request):
 
 
 def Business_request(request):
-    neighbour=Profile.objects.get(user=request.user)
-    business = Businesses.objects.all().filter(neighbourhood=neighbour.neighbourhood)[0:3]
+    neighbour = Profile.objects.get(user=request.user)
+    business = Businesses.objects.all().filter(
+        neighbourhood=neighbour.neighbourhood)[0:3]
     user = Profile.objects.filter(user=request.user).first()
-    
+
     context = {
         "business": business,
         "user": user,
-        "title":user.neighbourhood
+        "title": user.neighbourhood
     }
     return render(request, 'businesses.html', context=context)
 
@@ -114,28 +117,30 @@ def post_request(request):
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
-            neighbour=Profile.objects.get(user=request.user)
-            neighbourhood=neighbour.neighbourhood
-            form = Posts.objects.create(title=title, content=content,neighbourhood=neighbourhood,
-                             writer=Profile.objects.get(user=request.user),image=image)
+            neighbour = Profile.objects.get(user=request.user)
+            neighbourhood = neighbour.neighbourhood
+            form = Posts.objects.create(title=title, content=content, neighbourhood=neighbourhood,
+                                        writer=Profile.objects.get(user=request.user), image=image)
             form.save()
             return redirect('home')
     context = {
         'form': form
     }
     return render(request, 'post.html', context=context)
-    
+
+
 def business_search(request):
-    neighbour=Profile.objects.get(user=request.user)
-    business = Businesses.objects.all().filter(neighbourhood=neighbour.neighbourhood)
+    neighbour = Profile.objects.get(user=request.user)
+    business = Businesses.objects.all().filter(
+        neighbourhood=neighbour.neighbourhood)
     if 'bsname' in request.GET and request.GET['bsname']:
         searched_term = request.GET['bsname']
         user_display = request.user
 
         searched = Businesses.find_businesses(searched_term)
         message = f"{searched_term}"
-     
-        return render(request, 'search_results.html', {"message": message, 'searched': searched, 'user_display':user_display})
+
+        return render(request, 'search_results.html', {"message": message, 'searched': searched, 'user_display': user_display})
     else:
         message = "You haven't searched for any term"
         return render(request, 'search_results.html', {"message": message})
