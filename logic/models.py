@@ -81,7 +81,7 @@ class Businesses(models.Model):
 
     @classmethod
     def find_businesses(cls, business_name):
-        business = cls.objects.filter(name=business_name)
+        business = cls.objects.filter(name__icontains=business_name)
         return business
 
     @classmethod
