@@ -35,10 +35,11 @@
     </div>
     <div class="d-flex justify-content-between">
         <p class="h4">Posts</p>
-    </div>
+    </div>in.username %}
+    <mark> {{neighbourhood.adm
     <div class="row my-3 ">
         {% for post in posts %}
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="{{ post.image.url }}" alt="Card image" style="width:100%">
                 <div class="card-body">
@@ -70,7 +71,7 @@
     </div>
     <div class="row my-3">
         {% for bs in business %}
-        <div class="col-md-4">
+        <div class="col-md-4 mb-3">
             <div class="card" style="width: 20rem;">
                 <img class="card-img-top" src="{{ bs.business_image.url }}" alt="Card image" style="width:100%">
                 <div class="card-body">
