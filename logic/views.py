@@ -50,7 +50,6 @@ def login_request(request):
 def register(request):
     form = RegisterForm()
     if request.method == 'POST':
-        print(form.error_messages)
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
