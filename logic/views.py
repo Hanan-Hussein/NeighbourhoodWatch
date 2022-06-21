@@ -4,6 +4,7 @@ from .forms import RegisterForm, LoginForm, PostsForm
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Businesses, Neighbourhood, Profile, Posts
+from .email import send_welcome_email
 
 
 @login_required
@@ -52,7 +53,11 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
+            email = form.cleaned_data['email']
+            send_welcome_email(request.user.username, email)
+
             form.save()
+
             return redirect("login")
         else:
             context = {
