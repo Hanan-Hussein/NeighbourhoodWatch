@@ -6,8 +6,7 @@
 
 
 ## Description 
-This is a site where users can submit their projects, rate projects by usability,content and design, view and edit their profiles.
-The site also provides api to view all projects and the users in the system
+This is a site in which users can participate in their neighborhood by adding posts and viewing businesses around. Users can also change their neighborhood
 ## Behavioural Driven Development
 1. A user can sign up
 2. A user can login
